@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import React, { useRef, useState  } from "react";
 import { NavLink as NaviLink, withRouter } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -35,10 +34,10 @@ const NavLink = ({ children, classes, header, matchPathParent, route }) => {
     a.current.style.fontWeight = '700';
   };
 
-  const handlePointerLeave = ()=>{
+  const handlePointerLeave = ()=> {
     setFontWeightStyle(!fontWeightStyle)
     a.current.style.fontWeight='400';
-  }
+  };
 
   const popupState = usePopupState({ variant: 'popper', popupId: 'navlink' });
   return (
