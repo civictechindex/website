@@ -96,9 +96,9 @@ export const AddTagsQuestion = ({ resetForm,setDisplayState,setChangeValue }) =>
   )
 }
 
-export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,handleChangeChip }) =>{
+export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,handleChangeChip,chipInputValue,setChipInputValue,handleUpdateChipInput }) =>{
   const classes = useStyles();
-
+  // const [chipInputValue, setChipInputValue] = useState('');
   const handleGenerateTag = () =>{
     setChangeValue('GenerateTags')
     setDisplayState('GenerateTags')
@@ -106,6 +106,14 @@ export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,ha
   const handleResetForm = () => {
     resetForm()
   }
+  // const handleUpdateChipInput = (e) => {
+  //   // this chip input doesn't permit spaces in chip values
+  //   setChipInputValue(e.target.value.toLowerCase().replaceAll(" ", "-"))
+  // }
+  // const handleChange = () => {
+  //   // since the input value is controlled now, we need to clear it ourselves after adding a chip
+  //   setChipInputValue('')
+  // }
   return (
     <>
       <Grid style={{ padding:'20px' }}>
@@ -115,7 +123,10 @@ export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,ha
         <ChipInput
           fullWidth
           placeholder='Add topic tag'
-          onChange={(chips) => handleChangeChip(chips)}
+          // onChange={(chips) => handleChangeChip(chips)}
+          onChange={handleChangeChip}
+          onUpdateInput={handleUpdateChipInput}
+          inputValue={chipInputValue}
           className = {classes.addTag}
         />
       </Grid>
@@ -213,7 +224,7 @@ export const CopyPasteTags = ({ tagsToAdd,setDisplayState,repositoryName,reposit
 }
 
 
-export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChip,changeValue }) =>{
+export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChip,changeValue,chipInputValue,setChipInputValue,handleUpdateChipInput }) =>{
   const classes = useStyles();
   const handleAddMoreTags = () =>{
     if (changeValue === 'CopyPasteTags'){
@@ -236,7 +247,10 @@ export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChi
           defaultValue={userTags}
           fullWidth
           placeholder='Add topic tag'
-          onChange={(chips) => handleChangeChip(chips)}
+          onChange={handleChangeChip}
+          onUpdateInput={handleUpdateChipInput}
+          inputValue={chipInputValue}
+          // onChange={(chips) => handleChangeChip(chips)}
           className = {classes.addTag}
         />
       </Grid>

@@ -73,6 +73,7 @@ const TagCreator = () => {
   const [userTags, setUserTags] = useQueryParam('userTags',withDefault(ArrayParam,[]));
   const [orgTags, setOrgTags] = useQueryParam('orgTags',withDefault(ArrayParam,[]));
   const [options, setOptions] = useState([]);
+  const [chipInputValue, setChipInputValue] = useState('');
   const breadCrumbLinks = [{ href: '/home', name: 'Home' }, { href: '/join-index', name: 'Join the Index' }]
 
   const resetForm = () => {
@@ -185,10 +186,16 @@ const TagCreator = () => {
       handleChangeProjectRepository()
     }
   }
+
+  const handleUpdateChipInput = (e) => {
+    // this chip input doesn't permit spaces in chip values
+    setChipInputValue(e.target.value.toLowerCase().replaceAll(" ", "-"))
+  }
   const handleChangeChip = (chips) =>{
     let chipsArr = []
     chipsArr = chips.map(chip => chip.toLowerCase().trim().replaceAll(" ", "-"))
     setUserTags(chipsArr)
+    setChipInputValue('')
   }
 
   const linkStyles = {
@@ -249,7 +256,10 @@ const TagCreator = () => {
             setDisplayState={setDisplayState}
             setChangeValue={setChangeValue}
             resetForm={resetForm}
-            handleChangeChip={handleChangeChip}/>
+            handleChangeChip={handleChangeChip}
+            chipInputValue={chipInputValue}
+            setChipInputValue={setChipInputValue}
+            handleUpdateChipInput={handleUpdateChipInput}/>
         </>
       )
     case "GenerateTags":
@@ -267,7 +277,10 @@ const TagCreator = () => {
     case "AddMoreTags":
       return (
         <AddMoreTags userTags={userTags} setDisplayState={setDisplayState}
-          resetForm={resetForm} handleChangeChip={handleChangeChip} changeValue={changeValue} />
+          resetForm={resetForm} handleChangeChip={handleChangeChip} changeValue={changeValue}
+          chipInputValue={chipInputValue}
+          setChipInputValue={setChipInputValue}
+          handleUpdateChipInput={handleUpdateChipInput} />
       )
     case "CopyPasteTags":
       return (
