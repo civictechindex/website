@@ -107,7 +107,7 @@ const Home = () => {
     <>
       <Box className='boxBackground'>
         <div className='containerWorld'>
-          <Container disableGutters='true'>
+          <Container disableGutters>
             <Box component='div'>
               <Grid container
                 alignItems='center'
