@@ -1,5 +1,5 @@
 describe('FAQ Page', () => {
-  const SEARCH = 'what';
+  const SEARCH = 'organization';
   const Q1 = 'Can I add multiple projects';
   const Q2 = "Our organization doesn't have a parent organization";
   const A1 = 'Yes, Please follow the link to add multiple projects';
