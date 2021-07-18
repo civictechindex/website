@@ -1,5 +1,5 @@
-import React, { useRef, useState  } from "react";
-import { NavLink as NaviLink, withRouter } from 'react-router-dom';
+import React, { useRef, useState, useEffect  } from "react";
+import { NavLink as NaviLink, withRouter, useLocation } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { withStyles } from '@material-ui/core/styles';
 import { usePopupState, bindMenu, bindHover } from 'material-ui-popup-state/hooks';
@@ -10,9 +10,6 @@ const styles = () => ({
     "&:hover": {
       fontWeight: 700,
     },
-  },
-  linkOnMouseEnter: {
-    fontWeight: 700,
   },
   menu: {
     padding: '0',
@@ -25,21 +22,49 @@ const styles = () => ({
   },
 });
 
+
 const NavLink = ({ children, classes, header, matchPathParent, route }) => {
+  const location = useLocation();
   const a = useRef();
   const [fontWeightStyle, setFontWeightStyle] = useState(false);
 
-  const handlePointerEnter = () => {
+  const handle700FontBold = () => {
     setFontWeightStyle(!fontWeightStyle)
     a.current.style.fontWeight = '700';
   };
 
-  const handlePointerLeave = ()=> {
+  const handle400FontRegular = ()=> {
     setFontWeightStyle(!fontWeightStyle)
-    a.current.style.fontWeight='400';
+    a.current.style.fontWeight = '400';
   };
 
+  // eslint-disable-next-line complexity
+  useEffect(() => {
+    const paramsFirstLetter = location.pathname.split('/')[1][0];
+    const subHeaderDOMFirstLetter = a.current.innerHTML.toLowerCase()[0];
+
+    switch (true) {
+    case (paramsFirstLetter === 'j' && subHeaderDOMFirstLetter === 'j'):
+      a.current.style.fontWeight = '700';
+      break;
+    case (paramsFirstLetter === 'a' && subHeaderDOMFirstLetter === 'o'):
+      a.current.style.fontWeight = '700';
+      break;
+    case (paramsFirstLetter === 'o' && subHeaderDOMFirstLetter === 'c'):
+      a.current.style.fontWeight = '700';
+      break;
+    case (paramsFirstLetter === 's' && subHeaderDOMFirstLetter === 's'):
+      a.current.style.fontWeight = '700';
+      break;
+    default:
+      a.current.style.fontWeight = '400';
+      break;
+    }
+  }, [location.pathname]);
+
+
   const popupState = usePopupState({ variant: 'popper', popupId: 'navlink' });
+
   return (
     <>
       <Link
@@ -51,6 +76,8 @@ const NavLink = ({ children, classes, header, matchPathParent, route }) => {
         isActive={() => {
           return route === matchPathParent;
         }}
+        onPointerEnter={handle700FontBold}
+        onPointerLeave={handle400FontRegular}
         classes={{ root: classes.link }}
         ref={a}
       >
@@ -58,8 +85,8 @@ const NavLink = ({ children, classes, header, matchPathParent, route }) => {
       </Link>
       <Menu
         {...bindMenu(popupState)}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
+        onPointerEnter={handle700FontBold}
+        onPointerLeave={handle400FontRegular}
         onClick={popupState.close}
         getContentAnchorEl={null}
         anchorOrigin={{
@@ -70,7 +97,7 @@ const NavLink = ({ children, classes, header, matchPathParent, route }) => {
           vertical: 'top',
           horizontal: 'left',
         }}
-        classes={{ paper: classes.paper, list: classes.menu, link: classes.linkOnMouseEnter }}
+        classes={{ paper: classes.paper, list: classes.menu }}
         PopoverClasses={{ paper: classes.popover }}
         elevation={0}
       >
