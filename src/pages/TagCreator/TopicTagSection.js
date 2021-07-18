@@ -96,7 +96,7 @@ export const AddTagsQuestion = ({ resetForm,setDisplayState,setChangeValue }) =>
   )
 }
 
-export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,handleChangeChip,chipInputValue,setChipInputValue,handleUpdateChipInput }) =>{
+export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,handleChangeChip,chipInputValue,setChipInputValue,handleUpdateChipInput,handleAddChip }) =>{
   const classes = useStyles();
   // const [chipInputValue, setChipInputValue] = useState('');
   const handleGenerateTag = () =>{
@@ -125,7 +125,8 @@ export const AddTopicTagSection = ({ setDisplayState,setChangeValue,resetForm,ha
           placeholder='Add topic tag'
           // onChange={(chips) => handleChangeChip(chips)}
           onChange={handleChangeChip}
-          onUpdateInput={handleUpdateChipInput}
+          onAdd={(chip)=>handleAddChip(chip)}
+          // onUpdateInput={handleUpdateChipInput}
           inputValue={chipInputValue}
           className = {classes.addTag}
         />
@@ -224,7 +225,7 @@ export const CopyPasteTags = ({ tagsToAdd,setDisplayState,repositoryName,reposit
 }
 
 
-export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChip,changeValue,chipInputValue,setChipInputValue,handleUpdateChipInput }) =>{
+export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChip,changeValue,chipInputValue,setChipInputValue,handleUpdateChipInput,handleAddChip }) =>{
   const classes = useStyles();
   const handleAddMoreTags = () =>{
     if (changeValue === 'CopyPasteTags'){
@@ -248,7 +249,8 @@ export const AddMoreTags = ({ userTags,setDisplayState,resetForm,handleChangeChi
           fullWidth
           placeholder='Add topic tag'
           onChange={handleChangeChip}
-          onUpdateInput={handleUpdateChipInput}
+          onAdd={(chip)=>handleAddChip(chip)}
+          // onUpdateInput={handleUpdateChipInput}
           inputValue={chipInputValue}
           // onChange={(chips) => handleChangeChip(chips)}
           className = {classes.addTag}

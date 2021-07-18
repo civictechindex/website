@@ -191,12 +191,19 @@ const TagCreator = () => {
     // this chip input doesn't permit spaces in chip values
     setChipInputValue(e.target.value.toLowerCase().replaceAll(" ", "-"))
   }
-  const handleChangeChip = (chips) =>{
-    let chipsArr = []
-    chipsArr = chips.map(chip => chip.toLowerCase().trim().replaceAll(" ", "-"))
-    setUserTags(chipsArr)
-    setChipInputValue('')
+  const handleAddChip = (chip) => {
+    console.log(chip)
+    if (chip.endsWith("-")){
+      chip = chip.slice(0,-1)
+    }
+    setUserTags([...userTags,chip])
   }
+  // const handleChangeChip = (chips) =>{
+  //   let chipsArr = []
+  //   chipsArr = chips.map(chip => (chip.endsWith("-")) ? chip.slice(0,-1) : null)
+  //   setUserTags(chipsArr)
+  //   setChipInputValue('')
+  // }
 
   const linkStyles = {
     fontWeight: '400',
@@ -256,10 +263,11 @@ const TagCreator = () => {
             setDisplayState={setDisplayState}
             setChangeValue={setChangeValue}
             resetForm={resetForm}
-            handleChangeChip={handleChangeChip}
+            // handleChangeChip={handleChangeChip}
             chipInputValue={chipInputValue}
             setChipInputValue={setChipInputValue}
-            handleUpdateChipInput={handleUpdateChipInput}/>
+            handleUpdateChipInput={handleUpdateChipInput}
+            handleAddChip={handleAddChip}/>
         </>
       )
     case "GenerateTags":
@@ -277,10 +285,11 @@ const TagCreator = () => {
     case "AddMoreTags":
       return (
         <AddMoreTags userTags={userTags} setDisplayState={setDisplayState}
-          resetForm={resetForm} handleChangeChip={handleChangeChip} changeValue={changeValue}
+          resetForm={resetForm} changeValue={changeValue}
           chipInputValue={chipInputValue}
           setChipInputValue={setChipInputValue}
-          handleUpdateChipInput={handleUpdateChipInput} />
+          handleUpdateChipInput={handleUpdateChipInput} 
+          handleAddChip={handleAddChip}/>
       )
     case "CopyPasteTags":
       return (
