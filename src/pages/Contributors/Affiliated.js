@@ -24,8 +24,11 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft:'24px',
       color: theme.palette.secondary.dark,
     },
-    '& a:visited': {
+    '& a:link': {
       color: theme.palette.secondary.dark,
+    },
+    '& a:visited': {
+      color:theme.palette.secondary.dark,
     },
     [theme.breakpoints.down('xs')]: {
       height: '64px',
@@ -36,8 +39,11 @@ const useStyles = makeStyles((theme) => ({
     '& h4': {
       color: theme.palette.text.secondary,
     },
-    '& a:visited': {
+    '& a:link': {
       color: theme.palette.text.secondary,
+    },
+    '& a:visited': {
+      color:theme.palette.text.secondary,
     },
   },
   flexGrid:{
@@ -48,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     backgroundColor: theme.palette.background.default,
     padding:'24px 0px',
+  },
+  linkStyle: {
+    '& a:link': {
+      color: theme.palette.secondary.dark,
+    },
+    '& a:visited': {
+      color:theme.palette.secondary.dark,
+    },
   },
 }));
 /* eslint complexity: [0, 0]*/
@@ -67,15 +81,15 @@ export const Affiliated = (props) => {
           { searchCount ? `(${affiliatedCount}/${totalaffiliatedCount})`  : `(${totalaffiliatedCount})`   }
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={10} className={clsx(classesLocal.gpGrid, {
-        [classesLocal.blueColor]: gp === true,
-      })} >
+      <Grid item xs={12} sm={10} className={clsx(classesLocal.gpGrid, { [classesLocal.blueColor]: gp === true })}>
         <Grid>
           <img src="/images/Code_for_All.png" alt="code for all logo" />
         </Grid>
         <Grid>
           <Typography variant='h4' noWrap>
-            <Link href="https://codeforall.org"  target="_blank"  rel="noreferrer noopener">Code for All</Link>
+            <Link href="https://codeforall.org"  target="_blank"  rel="noreferrer noopener">
+              Code for All
+            </Link>
             { searchCount ? `(${affiliatedCount}/${totalaffiliatedCount})`  : ` (${totalaffiliatedCount})` }
           </Typography>
         </Grid>

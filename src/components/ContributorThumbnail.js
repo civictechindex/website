@@ -58,8 +58,10 @@ const useStyles = makeStyles((theme) => ({
     height: '14.39px',
   },
   contributorItem: {
-    display: 'flex',
+    display: 'grid',
     justifyContent: 'right',
+    marginRight: '2%',
+    marginTop: '2%',
   },
   thumbnailWrapperContributor: {
     display: 'flex',
