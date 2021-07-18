@@ -85,7 +85,10 @@ const SubscribeSection = ({ size }) => {
             <Typography
               variant='body1'
               color='textSecondary'
-              className={classes.sectionPaddingLg}
+              className={size !== 'lg'
+                ? `${classes.sectionPaddingSm}`
+                : `${classes.sectionPaddingLg}`
+              }
             >
               To receive updates about new projects and trending topics on the index, subscribe here.
             </Typography>

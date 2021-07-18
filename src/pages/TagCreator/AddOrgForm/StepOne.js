@@ -9,7 +9,6 @@ import ParentSelect from './ParentSelect';
 
 const StepOne = (props) => {
   const classes = useStyles();
-  const githubTagApiErr = props.apiErrors.org_tag;
   const githubUrlApiErr = props.apiErrors.github_url;
   const orgEmailApiErr = props.apiErrors.organization_email;
   const orgNameApiErr = props.apiErrors.name;
@@ -82,8 +81,6 @@ const StepOne = (props) => {
         &quot;code-for-america&quot;, &quot;open-oakland&quot; or &quot;hack4la&quot;.
       </Typography>
       <TextField
-        error={!!githubTagApiErr}
-        helperText={githubTagApiErr}
         label='GitHub Tag'
         onChange={(event) => {
           props.onGithubTag(event.target.value);

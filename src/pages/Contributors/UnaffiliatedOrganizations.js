@@ -1,42 +1,85 @@
 import React, { useState } from "react";
 import { ContributorThumbnail } from "../../components/ContributorThumbnail";
-import { useStyle } from "./styles.js";
+
 import Typography from '@material-ui/core/Typography';
 import Box from "@material-ui/core/Box";
+import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles'
+
+const useStyles = makeStyles((theme) => ({
+  unAfflText: {
+    color: theme.palette.secondary.dark,
+    textAlign: 'center',
+  },
+
+  unaffiliatedThumbnailsWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    width:'100%',
+  },
+  unaffiliatedThumbnails: {
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    alignItems: 'center',
+    width: '496px',
+    height:'80px',
+    borderRadius: '6px',
+    border:'1px solid',
+    borderColor:theme.palette.outline.gray,
+    margin:'8px',
+    '& p': {
+      fontSize:'24px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width:'440px',
+      height: '80px',
+      '& p': {
+        fontSize:'18px',
+      },
+    },
+    [theme.breakpoints.down('xs')]: {
+      width:'276px',
+      height: '64px',
+      '& p': {
+        fontSize:'18px',
+      },
+    },
+  },
+}));
 
 export const UnaffiliatedOrganizations = (props) => {
   const { searchCount, unaffiliatedCount, totalunaffiliatedCount, unaffiliatedOpen, organization, checkboxValue } = props;
-  const classes = useStyle();
+  const classes = useStyles();
   const [isChildThumbnail] = useState(true);
 
   return (
-    <Box className={classes.unaffiliatedWrapper}>
+    <Grid>
 
-      <Box component="div" className={classes.affiliation}>
-        <Typography variant='h2' color='primary' component={'span'} className={classes.unAfflText}>
-
-                          Unaffiliated Organizations
+      <Grid style={{ padding:'24px 0px 32px' }}>
+        <Typography variant='h4' className={classes.unAfflText}>
+          Unaffiliated Organizations
           <span style={{ paddingLeft: "1px" }}> {searchCount ? `(${unaffiliatedCount}/${totalunaffiliatedCount})`  : `(${totalunaffiliatedCount})`   } </span>
         </Typography>
-      </Box>
+      </Grid>
       { checkboxValue ?
         <Box><Typography color='primary' className={classes.noargText}> No organization found </Typography> </Box>
         :
-        <Box>
+        <Grid>
           {unaffiliatedOpen && (
-            <Typography className={classes.unaffiliatedThumbnailsWrapper}>
+            <Grid  className={classes.unaffiliatedThumbnailsWrapper}>
               {organization && organization.map((org, index) => (
-                <Typography className={classes.unaffiliatedThumbnails} key={index} component="span">
+                <Grid className={classes.unaffiliatedThumbnails} key={index}>
                   <ContributorThumbnail
                     organization={org}
                     isChildThumbnail={isChildThumbnail}
                   ></ContributorThumbnail>
-                </Typography>
+                </Grid>
               ))}
-            </Typography>
+            </Grid>
           )}
-        </Box>
+        </Grid>
       }
-    </Box>
+    </Grid>
   );
 };

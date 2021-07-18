@@ -1,111 +1,105 @@
+/* eslint-disable complexity */
 import React, { useEffect, useState } from "react";
 import { getOrganizationLinks } from "./getOrganizationLinks.js";
-import { useStyle } from "../pages/Contributors/styles";
 import Link from '@material-ui/core/Link';
 import CardMedia from '@material-ui/core/CardMedia';
-import Container from "@material-ui/core/Container";
 import Grid from '@material-ui/core/Grid';
 import { Typography } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
+import makeStyles from '@material-ui/core/styles/makeStyles'
+
+const useStyles = makeStyles((theme) => ({
+  thumbnailWrapper: {
+    display: 'flex',
+    flexDirection:'row',
+    alignItems: 'center',
+    padding:'8px',
+    flexWrap:'nowrap',
+  },
+
+  thumbnailImage: {
+    width: '48px',
+    height: '48px',
+    [theme.breakpoints.down('sm')]: {
+      width: '32px',
+      height: '32px',
+    },
+
+  },
+  orgText: {
+    paddingLeft:'16px',
+    color:theme.palette.secondary.dark,
+    '& a:link': {
+      color: theme.palette.secondary.dark,
+    },
+    '& a:visited': {
+      color: theme.palette.secondary.dark,
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft:'8px',
+    },
+  },
+  blueColorText: {
+    paddingLeft:'16px',
+    color: theme.palette.text.secondary,
+    '& a:link': {
+      color: theme.palette.text.secondary,
+    },
+    '& a:visited': {
+      color: theme.palette.text.secondary,
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft:'8px',
+    },
+  },
+  thumbnails:{
+
+  },
+}));
 
 export const ContributorThumbnail = ({ organization, isOpen, dropdownLength, isChildThumbnail }) => {
-  const classes = useStyle();
+  const classes = useStyles();
 
   const [thumbnailInfo, setThumbnailInfo] = useState({});
-  
+
   useEffect(() => {
-
-
     setThumbnailInfo(getOrganizationLinks(organization));
-
   }, [organization]);
 
   return (
-
-
     <>
-      <Container className={isChildThumbnail ? `${classes.altThumbnailWrapper}` : `${classes.thumbnailWrapper}`} component="span">
-        {organization.cti_contributor && (
-          <Box className={classes.contributorThumbnailWrapper}>
-
-            <CardMedia
-              component="img"
-              src='/images/contributor-icon.png'
-              className={classes.contributorThumbnailImage}
-              onError={(e) =>
-              // eslint-disable-next-line no-console
-                console.log(`${e}: error with ${organization.name} image`)
-                // Before MVP: Refactor as on-website error/generic case.
-              }
-              alt={`${organization.name} logo`}
-              loading="lazy"
-            />
-          </Box>)
-        }
+      <Box>
         {thumbnailInfo.organizationUrl ? (
 
-          <Link
-            href={thumbnailInfo.organizationUrl}
-            className={classes.thumbnails}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            {thumbnailInfo.imageUrl ? (
-
-              <Thumbnail
-                thumbnailInfo={thumbnailInfo}
-                organization={organization}
-                isOpen={isOpen}
-                dropdownLength={dropdownLength}
-              />
-            ) : (
-              <Grid className={classes.textWrapperWithoutImage} component="span">
-                <Grid className={classes.thumbnailTextWithoutImage} component="span">
-                  <Typography component="span" className={isOpen ? `${classes.blueColorText}` : `${classes.orgText}`}>
-                    {organization.name ? organization.name : organization}
-                    <span style={{ paddingLeft: "1px" }}> { dropdownLength ? `(${dropdownLength})`  : ` `   }  </span>
-                  </Typography>
-                </Grid>
-              </Grid>
-            )}
-          </Link>
-        ) : (
+          <Thumbnail
+            thumbnailInfo={thumbnailInfo}
+            organization={organization}
+            isOpen={isOpen}
+            dropdownLength={dropdownLength}
+            isChildThumbnail={isChildThumbnail}
+          />
+        )  : (
           <Grid className={classes.textWrapperWithoutImage} component="span">
             <Typography component="span"> No URL Data for {organization.name} </Typography>
           </Grid>
         )}
-
-
-
-
-      </Container>
+      </Box>
     </>
   );
 };
 
-
-
-const Thumbnail = ({  thumbnailInfo, organization, isOpen,dropdownLength }) => {
-  const classes = useStyle();
+const Thumbnail = ({  thumbnailInfo, organization, isOpen,dropdownLength,isChildThumbnail }) => {
+  const classes = useStyles();
   if (thumbnailInfo.imageUrl.includes('undefined') || thumbnailInfo.imageUrl.includes('scontent')){
     thumbnailInfo.imageUrl = '/images/default-github-repo-image.png';
   }
-  var thumbnailImageStyle = classes.thumbnailImage;
-  var thumbnailTextStyle = classes.thumbnailText;
-  var textWrapperStyle = classes.textWrapper;
-  console.log(dropdownLength)
-  if(organization.affiliated && dropdownLength > 0){
-    thumbnailImageStyle = classes.unaffiliatedThumbnailImage;
-    thumbnailTextStyle = classes.dropdownThumbnailText;
-    textWrapperStyle = classes.dropdownTextWrapper;
-  }
   return (
-    <>
-      <Grid className={classes.imageWrapper} component="span">
+    <Grid container className={classes.thumbnailWrapper}>
+      <Grid item className={classes.imageWrapper}>
         <CardMedia
           component="img"
           src={thumbnailInfo.imageUrl}
-          className={thumbnailImageStyle}
+          className={classes.thumbnailImage}
           onError={(e) =>
             // eslint-disable-next-line no-console
             console.log(`${e}: error with ${organization.name} image`)
@@ -116,16 +110,17 @@ const Thumbnail = ({  thumbnailInfo, organization, isOpen,dropdownLength }) => {
         />
       </Grid>
 
-      <Grid data-cy="affthumbnailTextWrapper" className={textWrapperStyle} component="span">
-        <Box data-cy="affthumbnailText" className={thumbnailTextStyle} component="span">
-
-          <Typography  component={'span'} data-cy='thumbnailTextInfn' className={isOpen ? `${classes.blueColorText}` : `${classes.orgText}`}>
-            {organization.name ? organization.name : organization}
-
-            <span style={{ paddingLeft: "1px" }}> { dropdownLength ? `(${dropdownLength})`  : ` `   }  </span>
-          </Typography>
-        </Box>
+      <Grid item data-cy="affthumbnailText" className={classes.affthumbnailText}>
+        <Typography variant={isChildThumbnail ? 'body1':'h6'} noWrap  data-cy='thumbnailTextInfn' className={isOpen ? `${classes.blueColorText}` : `${classes.orgText}`}>
+          <Link
+            href={thumbnailInfo.organizationUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >{organization.name ? organization.name : organization}
+          </Link> { dropdownLength ? `(${dropdownLength})`  : ` `   }
+        </Typography>
       </Grid>
-    </>
+
+    </Grid>
   );
 };

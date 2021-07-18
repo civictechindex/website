@@ -19,7 +19,7 @@ const SocialSection = ({ size }) => {
         className={size === 'lg' ? classes.socialContainerLarge : null}
       >
         <Grid item >
-          <Typography variant='h6' color='textSecondary' className={classes.linkTypography}>Follow Us</Typography>
+          <Typography variant='body2' color='textSecondary' className={size !== 'lg' ? classes.followTypographySm : classes.followTypographyLg}>Follow Us</Typography>
         </Grid>
 
         <Grid item  className={size !== 'lg' ? classes.socialContainer : classes.socialIcons}>

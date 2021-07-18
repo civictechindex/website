@@ -8,13 +8,14 @@ const LinkList = ({ header, links, route }) => {
   const classes = useStyles();
 
   return (
-    <Box >
+    <Box style={{ padding: '0px 5px' }}>
       <Typography
         component={Link}
         to={route}
         variant='body2'
         color='textSecondary'
-        className={classes.linkTypography}>
+        className={classes.linkTypography}
+      >
         {header}
       </Typography>
       {links.map((link) => {

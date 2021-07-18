@@ -2,7 +2,7 @@
   "baseUrl": "http://localhost:3000",
   "defaultCommandTimeout": 60000,
   "env": {
-    "REACT_APP_API_URL": "https://api-stage.civictechindex.org"
+    "REACT_APP_API_URL": "https://api.civictechindex.org"
   },
   "ignoreTestFiles": ["tag-creator.spec.js", "contributors.spec.js"]
 }

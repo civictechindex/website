@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   annotation: {
+    paddingTop: '30px',
     marginTop: theme.spacing(6),
     textAlign: 'center',
     '& a': {
@@ -64,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   socialIcons: {
-    marginTop:'12px',
+    paddingTop:'12px',
   },
   socialContainerLarge: {
     textAlign: 'center',
@@ -100,9 +101,11 @@ const useStyles = makeStyles(theme => ({
   },
   sectionPaddingSm: {
     padding: '0px 10px 16px 0px',
+    fontSize: '16px!important',
   },
   sectionPaddingLg: {
-    padding: '0px 0px 10px 0px',
+    padding: '0px 10px 10px 5px',
+    fontSize: '14px!important',
   },
   submitBtn:{
     marginTop:'5px!important' ,
@@ -110,6 +113,12 @@ const useStyles = makeStyles(theme => ({
   },
   linkTypography:{
     fontSize: '14px!important',
+  },
+  followTypographyLg:{
+    fontSize: '14px!important',
+  },
+  followTypographySm:{
+    fontSize: '16px!important',
   },
 }));
 

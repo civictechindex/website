@@ -69,20 +69,29 @@ const AddOrgForm = React.forwardRef(({ onClose }, ref) => {
 
   // eslint-disable-next-line complexity
   const handleSubmit = async () => {
+    const updatedGithubUrl = githubUrl.indexOf('https://') < 0 ? 'https://' + githubUrl : githubUrl;
+    const updatedWebsiteUrl = websiteUrl.indexOf('http://') < 0 && websiteUrl.indexOf('https://') < 0
+      ? 'https://' + websiteUrl : websiteUrl;
     const orgProps = {
       name: orgName,
-      github_url: githubUrl,
-      website_url: websiteUrl,
+      github_url: updatedGithubUrl,
+      website_url: updatedWebsiteUrl,
       organization_email: orgEmail,
       org_tag: githubTag,
     };
-    if (parentOrg.id) { orgProps.parent_organization = parentOrg.id }
-    if (facebookUrl) { orgProps.facebook_url = facebookUrl }
-    if (twitterUrl) { orgProps.twitter_url = twitterUrl }
-    if (meetupUrl) { orgProps.meetup_url = meetupUrl }
     if (city) { orgProps.city = city }
     if (stateProvCo) { orgProps.state = stateProvCo }
     if (country.label) { orgProps.country = country.label }
+    if (parentOrg.id) { orgProps.parent_organization = parentOrg.id }
+    if (facebookUrl) {
+      orgProps.facebook_url = facebookUrl.indexOf('https://') < 0 ? 'https://' + facebookUrl : facebookUrl;
+    }
+    if (meetupUrl) {
+      orgProps.meetup_url = meetupUrl.indexOf('https://') < 0 ? 'https://' + meetupUrl : meetupUrl;
+    }
+    if (twitterUrl) {
+      orgProps.twitter_url = twitterUrl.indexOf('https://') < 0 ? 'https://' + twitterUrl : twitterUrl;
+    }
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/api/organizations/`, orgProps);
       setStep(2);

@@ -16,7 +16,7 @@ const FooterSmall = () => {
     <Box className={classes.containerFooter}>
       <Box className={classes.footerPadding}>
         <Grid container className={classes.footerContainer}>
-          <Grid container item spacing={4} xs={12} direction='column'>
+          <Grid container item spacing={4} xs={12} direction='row'>
             {navigation.map((nav) => {
               return (
                 <Grid key={nav.id} item xs={12}>
