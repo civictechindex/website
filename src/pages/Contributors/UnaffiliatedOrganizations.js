@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.dark,
     textAlign: 'center',
   },
-
+  noargText: {
+    fontSize:'24px',
+    marginLeft: '38%',
+  },
   unaffiliatedThumbnailsWrapper: {
     display: 'flex',
     alignItems: 'center',

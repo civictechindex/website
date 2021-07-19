@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     padding:'8px',
     flexWrap:'nowrap',
   },
-
   thumbnailImage: {
     width: '48px',
     height: '48px',
@@ -24,10 +23,9 @@ const useStyles = makeStyles((theme) => ({
       width: '32px',
       height: '32px',
     },
-
   },
   orgText: {
-    paddingLeft:'16px',
+    paddingLeft:'9px',
     color:theme.palette.secondary.dark,
     '& a:link': {
       color: theme.palette.secondary.dark,
@@ -52,8 +50,30 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft:'8px',
     },
   },
-  thumbnails:{
-
+  contributorIcon: {
+    marginTop: '2%',
+    marginRight: '2%',
+    width: '14.39px',
+    height: '14.39px',
+  },
+  contributorItem: {
+    display: 'grid',
+    justifyContent: 'right',
+    marginRight: '2%',
+    marginTop: '2%',
+  },
+  thumbnailWrapperContributor: {
+    display: 'flex',
+    flexDirection:'row',
+    alignItems: 'center',
+    padding:'8px',
+    flexWrap:'nowrap',
+    position: 'relative',
+    marginTop: '-6%',
+  },
+  thumbnailChildImage: {
+    width: '38px',
+    height: '38px',
   },
 }));
 
@@ -93,34 +113,55 @@ const Thumbnail = ({  thumbnailInfo, organization, isOpen,dropdownLength,isChild
   if (thumbnailInfo.imageUrl.includes('undefined') || thumbnailInfo.imageUrl.includes('scontent')){
     thumbnailInfo.imageUrl = '/images/default-github-repo-image.png';
   }
+
+  let thumbnailImageStyle,thumbnailWrapperStyle;
+  if (organization.cti_contributor){
+    thumbnailWrapperStyle = classes.thumbnailWrapperContributor;
+  }
+  else
+  {
+    thumbnailWrapperStyle = classes.thumbnailWrapper;
+  }
+  if (organization.affiliated && dropdownLength > 0){
+
+    thumbnailImageStyle = classes.thumbnailImage;
+  }
+  else
+  {
+    thumbnailImageStyle = classes.thumbnailChildImage;
+  }
   return (
-    <Grid container className={classes.thumbnailWrapper}>
-      <Grid item className={classes.imageWrapper}>
-        <CardMedia
-          component="img"
-          src={thumbnailInfo.imageUrl}
-          className={classes.thumbnailImage}
-          onError={(e) =>
+    <>
+      <Box className={classes.contributorItem} item xs={4} justify="flex-end">{ organization.cti_contributor  ? <img className={classes.contributorIcon} src='/images/contributor-icon.png' alt="contributor-icon" />  : ``   }</Box>
+      <Grid className={thumbnailWrapperStyle} item container xs={4}>
+        <Grid item className={classes.imageWrapper}>
+          <CardMedia
+            component="img"
+            src={thumbnailInfo.imageUrl}
+            // className={classes.thumbnailImage}
+            className={thumbnailImageStyle}
+            onError={(e) =>
             // eslint-disable-next-line no-console
-            console.log(`${e}: error with ${organization.name} image`)
+              console.log(`${e}: error with ${organization.name} image`)
             // Before MVP: Refactor as on-website error/generic case.
-          }
-          alt={`${organization.name} logo`}
-          loading="lazy"
-        />
+            }
+            alt={`${organization.name} logo`}
+            loading="lazy"
+          />
+        </Grid>
+
+        <Grid item data-cy="affthumbnailText" className={classes.affthumbnailText}>
+          <Typography variant={isChildThumbnail ? 'body1':'h6'} noWrap  data-cy='thumbnailTextInfn' className={isOpen ? `${classes.blueColorText}` : `${classes.orgText}`}>
+            <Link
+              href={thumbnailInfo.organizationUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+            >{organization.name ? organization.name : organization}
+            </Link> { dropdownLength ? `(${dropdownLength})`  : ` `   }
+          </Typography>
+        </Grid>
       </Grid>
 
-      <Grid item data-cy="affthumbnailText" className={classes.affthumbnailText}>
-        <Typography variant={isChildThumbnail ? 'body1':'h6'} noWrap  data-cy='thumbnailTextInfn' className={isOpen ? `${classes.blueColorText}` : `${classes.orgText}`}>
-          <Link
-            href={thumbnailInfo.organizationUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-          >{organization.name ? organization.name : organization}
-          </Link> { dropdownLength ? `(${dropdownLength})`  : ` `   }
-        </Typography>
-      </Grid>
-
-    </Grid>
+    </>
   );
 };
