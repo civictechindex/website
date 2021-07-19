@@ -270,6 +270,7 @@ export default function Contributors({ match }) {
                   control={
                     <Checkbox className={classes.chkBoxStyle}
                       onChange={checkBoxChange} defaultChecked={false}
+                      style={{ backgroundColor: 'transparent' }}
                     />
                   }
                   label={<Typography className={classes.formControlLabel}>Index Contributor</Typography>} />
