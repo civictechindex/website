@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import sanitizeHtml from 'sanitize-html';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -8,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -38,6 +39,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+const SanitizedAnswer = ({ answer }) => {
+  const unescapeQuotes = (s) => {
+    return s.replace(/\\"/g, '"');
+  }
+  const sanitize = (s) => {
+    return {
+      __html: sanitizeHtml(s),
+    };
+  };
+  return (
+    <span dangerouslySetInnerHTML={sanitize(unescapeQuotes(answer))} />
+  );
+};
 
 const AccordionSection = (props) => {
   const [currentFaq, setCurrentFaq] = useState([]);
@@ -77,7 +92,9 @@ const AccordionSection = (props) => {
             </AccordionSummary>
             <Divider />
             <AccordionDetails data-cy='faq-answer' className={classes.detail}>
-              <Typography>{faq.answer}</Typography>
+              <Typography>
+                <SanitizedAnswer answer={faq.answer} />
+              </Typography>
             </AccordionDetails>
           </Accordion>
         </Box>

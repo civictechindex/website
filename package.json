@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "sanitize-html": "^2.4.0",
     "use-clipboard-copy": "^0.2.0",
     "use-query-params": "^1.2.2",
     "webfontloader": "^1.6.28"
