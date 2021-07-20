@@ -67,7 +67,7 @@ const TagCreator = () => {
   const [changeValue, setChangeValue] = useQueryParam('changeValue',withDefault(StringParam,''));
   const [repositoryUrl, setRepositoryUrl] = useQueryParam('repositoryUrl',withDefault(StringParam,''));
   const [repositoryName, setRepositoryName] = useQueryParam('repositoryName',withDefault(StringParam,''));
-  const [topicSearchError, setTopicSearchError] = useState('');
+  const [topicSearchError, setTopicSearchError] = useQueryParam('topicSearchError',withDefault(StringParam,''));
   const [tagsToAdd, setTagsToAdd] = useQueryParam('tagsToAdd',withDefault(ArrayParam,[]));
   const [currentTags, setCurrentTags] = useQueryParam('currentTags',withDefault(ArrayParam,[]));
   const [userTags, setUserTags] = useQueryParam('userTags',withDefault(ArrayParam,[]));
@@ -161,7 +161,7 @@ const TagCreator = () => {
     setRepositoryName(repName)
     // Return error message if no url present
     if (urlPath.length === 0){
-      return setTopicSearchError(<p style={{ color: 'red' }}>Please enter a URL</p>);
+      return setTopicSearchError('Please enter a URL');
     }
     // Fetches Tags from API only if URL is changed
     if (prevRefUrl !== repositoryUrl){
@@ -169,7 +169,7 @@ const TagCreator = () => {
         headers: { Accept: "application/vnd.github.mercy-preview+json" },
       })
         .then(res => {
-          setTopicSearchError()
+          setTopicSearchError('')
           setCurrentTags(res.data.names)
           handleChangeProjectRepository()
         }).catch(e => {
@@ -177,9 +177,14 @@ const TagCreator = () => {
          * This should store the error state.
          * Component should check for error state and resolve the correct response.
          */
-          console.log(e);
-          setTopicSearchError(<p style={{ color: 'red' }}>Cannot find repository. Please check the name and try again</p>)
+          if (e){
+            setTopicSearchError('Cannot find repository. Please check the name and try again')
+            setDisplayState('ProjectUrl')
+          }
         })
+    }
+    if ((prevRefUrl === repositoryUrl) && ((topicSearchError) === 'Cannot find repository. Please check the name and try again')){
+      setDisplayState('ProjectUrl')
     }
     else {
       handleChangeProjectRepository()
