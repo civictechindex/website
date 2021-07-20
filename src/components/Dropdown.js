@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ContributorThumbnail } from './ContributorThumbnail';
 import { DropdownArrow } from './DropdownArrow';
@@ -40,9 +40,10 @@ export const Dropdown = ({
   children,
   dropdownLength,
   isOpen,
+
 }) => {
-  const [openChild, setOpenChild] = useState(false);
-  const [colorStyle, setColor] = useState(false);
+  const [openChild, setOpenChild] = useState(isOpen ? true : false);
+  const [colorStyle, setColor] = useState(isOpen ? true : false);
   const classes = useStyles();
 
   const handleOpen = () => {
@@ -50,17 +51,23 @@ export const Dropdown = ({
     setColor(!colorStyle);
   };
 
+
+
+  useEffect(()=>{
+    setOpenChild(isOpen);
+    setColor(isOpen);
+  },[isOpen])
   return (
 
-    <Grid >
+    <Grid>
       {dropdownLength ? (
         <Grid item xs={10} className={clsx(classes.dropdown, { [classes.blueColor]: colorStyle === true })} >
           <Grid>
             <ContributorThumbnail organization={organization} dropdownLength={dropdownLength} isOpen={colorStyle} isChildThumbnail={false}/>
           </Grid>
           <Grid className={classes.flexGrid}></Grid>
-          <Grid item container className={classes.flexGrid} onClick={handleOpen} >
-            <DropdownArrow  open={openChild} handleArrow={handleOpen} />
+          <Grid item container className={classes.flexGrid} onClick={handleOpen}>
+            <DropdownArrow  open={openChild} setOpenFunction={setOpenChild}  handleArrow={handleOpen}/>
           </Grid>
         </Grid>
       ) : null}

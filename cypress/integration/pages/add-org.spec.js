@@ -23,7 +23,7 @@ describe('Add Organization Workflow', () => {
   before(() => {
     cy.intercept(`${Cypress.env('REACT_APP_API_URL')}/api/organizations/`).as('getOrganizations');
     cy.visit('/join-index');
-    cy.wait('@getOrganizations')
+    cy.wait('@getOrganizations');
     cy.get('[data-cy=radio-yes]').click();
     cy.wait(100);
   });

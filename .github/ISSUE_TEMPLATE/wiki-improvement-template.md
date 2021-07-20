@@ -2,7 +2,7 @@
 name: Wiki Improvement Template
 about: Submit any suggestions of improvements for the Wiki here
 title: Wiki Page Update [Page]
-labels: 'documentation, role: product/project mgmt'
+labels: documentation
 assignees: ''
 
 ---

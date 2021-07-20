@@ -1,28 +1,46 @@
 describe('FAQ Page', () => {
   const SEARCH = 'what';
-  const Q = 'What is Civic Tech';
-  const A =
-    'Civic technology, or civic tech, enhances the relationship between the people and government with software for communications, decision-making, service delivery, and political process. It includes information and communications technology supporting government with software built by community-led teams of volunteers, nonprofits, consultants, and private companies as well as embedded tech teams working within government';
+  const Q1 = 'Can I add multiple projects';
+  const Q2 = "Our organization doesn't have a parent organization";
+  const A1 = 'Yes, Please follow the link to add multiple projects';
+  const A2 =
+    'You can still be a part of Civic tech index, even if your organization is unaffiliated';
 
   before(() => {
-    cy.visit('/about/faq')
+    cy.intercept(`${Cypress.env('REACT_APP_API_URL')}/api/faqs/`).as('getFaqs');
+    cy.visit('/about/faq');
+    cy.wait('@getFaqs');
   })
 
   it('title section loads', () => {
     cy.contains('How can we help?');
   })
 
-  it('gets faq by search', () => {
-    cy.get('[data-cy=search-faq]').click({ force: true }); // need two get's to avoid flaky test
-    cy.get('[data-cy=search-faq]').click({ force: true }).type(SEARCH);
+  it('default faq list is loaded', () => {
     cy.get('[data-cy=faq-question]')
       .first()
-      .contains(Q)
+      .contains(Q1)
       .click({ force: true });
     cy.get('[data-cy=faq-answer]')
       .first()
       .parent()
       .click()
-      .contains(A);
+      .contains(A1);
+  });
+
+  it('gets faq by search', () => {
+    cy.get('[data-cy=search-faq]').click({ force: true }); // need two get's to avoid flaky test
+    cy.get('[data-cy=search-faq]').click({ force: true }).type(SEARCH);
+    cy.intercept(`${Cypress.env('REACT_APP_API_URL')}/api/faqs/`).as('getFaqs');
+    cy.wait('@getFaqs');
+    cy.get('[data-cy=faq-question]')
+      .first()
+      .contains(Q2)
+      .click({ force: true });
+    cy.get('[data-cy=faq-answer]')
+      .first()
+      .parent()
+      .click()
+      .contains(A2);
   })
 })

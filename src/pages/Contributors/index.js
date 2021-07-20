@@ -19,7 +19,6 @@ import Tab from "@material-ui/core/Tab";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Affiliated  } from "./Affiliated";
 import { UnaffiliatedOrganizations } from "./UnaffiliatedOrganizations";
 import OrganizationSearch from "./OrganizationSearch";
@@ -203,33 +202,7 @@ export default function Contributors({ match }) {
     };
   }
 
-  const theme = createMuiTheme({
 
-
-
-    overrides: {
-      MuiTab: {
-        "root": {
-          color: 'theme​.palette.​text.disabled',
-          fontSize: '32px',
-          fontWeight: 'bold',
-          textTransform: 'none',
-          display: "flex",
-
-          '&$selected': {
-            color: '#006B95',
-          },
-
-        },
-        wrapper: {
-          flexDirection: "row",
-          width: "auto",
-        },
-
-      },
-
-    },
-  });
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -276,25 +249,20 @@ export default function Contributors({ match }) {
       </Box>
       <Box className='containerGray'>
         <Container>
-          <MuiThemeProvider theme={theme}>
-            <AppBar position="static" color="default" elevation={0}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                variant="fullWidth"
-                className={classes.tabs}
-                classes={{ indicator: classes.indicator }}
-              >
+          <AppBar position="static" color="default" elevation={0}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="fullWidth"
+              className={classes.tabs}
+              classes={{ indicator: classes.indicator }}
+            >
 
-                <Tab label={<>({totalunaffiliatedCount + totalaffiliatedCount })</>} icon="All" {...a11yProps(0)} className={classes.tabVal} />
-                <Tab  icon="Unaffiliated"  label={<>({affiliatedOrganizationsObject["unaffiliated"] ? affiliatedOrganizationsObject["unaffiliated"].length : 0})</>} className={classes.tabVal} {...a11yProps(1)} />
-                <Tab  icon="Affiliated" label={<>({totalaffiliatedCount})</>} className={classes.tabVal} {...a11yProps(2)} />
-              </Tabs>
-            </AppBar>
-          </MuiThemeProvider>
-
-
-
+              <Tab label={<>({totalunaffiliatedCount + totalaffiliatedCount })</>} icon="All" {...a11yProps(0)} classes={{ root: classes.tabRoot, selected: classes.tabSelected }} />
+              <Tab  icon="Unaffiliated"  label={<>({affiliatedOrganizationsObject["unaffiliated"] ? affiliatedOrganizationsObject["unaffiliated"].length : 0})</>} classes={{ root: classes.tabRoot, selected: classes.tabSelected }} {...a11yProps(1)} />
+              <Tab  icon="Affiliated" label={<>({totalaffiliatedCount})</>} classes={{ root: classes.tabRoot, selected: classes.tabSelected }} {...a11yProps(2)} />
+            </Tabs>
+          </AppBar>
           <Grid index={value}>
             <Grid>
               <FormGroup>
@@ -302,6 +270,7 @@ export default function Contributors({ match }) {
                   control={
                     <Checkbox className={classes.chkBoxStyle}
                       onChange={checkBoxChange} defaultChecked={false}
+                      style={{ backgroundColor: 'transparent' }}
                     />
                   }
                   label={<Typography className={classes.formControlLabel}>Index Contributor</Typography>} />

@@ -20,13 +20,15 @@ export const DropdownArrow  = ({ open,handleOpen }) => {
     },
   }));
 
-
   const classes = useStyles();
+  const handleClick = (setOpenFunction) => {
+    setOpenFunction((c) => !c);
+  };
 
   return (
     <>
       {open ? <ExpandLessRoundedIcon id = "dropdownChevron" className={classes.clickDropDown} onClick={handleOpen} />
-        : <ExpandMoreRoundedIcon id = "dropdownChevron" className={classes.chevron} onClick={handleOpen} />}
+        : <ExpandMoreRoundedIcon id = "dropdownChevron"  className={classes.chevron}  onClick={()=>handleClick}/>}
     </>
   );
 
