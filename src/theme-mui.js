@@ -159,6 +159,12 @@ const themeSettings = {
         },
       },
     },
+    MuiDialogActions: {
+      root: {
+        display: 'flex',
+        justifyContent: 'center',
+      },
+    },
     MuiInputLabel: {
       root: {
         color: DARK_GRAY,

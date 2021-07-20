@@ -50,9 +50,9 @@ const ResultHeader = (props) => {
             onChange={(e) => props.onSortChange(e.target.value)}
           >
             <MenuItem value='best match'>Best Match</MenuItem>
-            {/* 
+            {/*
               Issue#626: This is the temporary fix that removes the 'Last Updated' option from Dropdown in the search page.
-              <MenuItem value='updated'>Last Updated</MenuItem> 
+              <MenuItem value='updated'>Last Updated</MenuItem>
             */}
             <MenuItem value='stars'>Stargazer Count</MenuItem>
           </Select>
