@@ -35,7 +35,7 @@ describe('Add Organization Workflow', () => {
       cy.get('#add-org-link').click();
     });
     cy.wait('@getOrganizations');
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=makeStyles-progress]').contains('Project Information');
       cy.get('[class*=MuiLinearProgress]').invoke('attr', 'aria-valuenow').should('eq', '50');
       cy.get('input').eq(0).type(INVALID_EMAIL);
@@ -56,12 +56,10 @@ describe('Add Organization Workflow', () => {
   });
 
   it('loads first step and enables the next step button', () => {
-    cy.intercept(`${Cypress.env('REACT_APP_API_URL')}/api/organizations/`).as('getOrganizations');
     cy.get('#container-affiliated').within(() => {
       cy.get('#add-org-link').click();
     });
-    cy.wait('@getOrganizations');
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).should('be.empty');
       cy.get('input').eq(1).should('be.empty');
       cy.get('input').eq(2).should('be.empty');
@@ -79,30 +77,30 @@ describe('Add Organization Workflow', () => {
   });
 
   it('loads next step and returns to first step', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('button').eq(3).click();
     });
     cy.wait(100);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=MuiLinearProgress]').invoke('attr', 'aria-valuenow').should('eq', '100');
       cy.get('button').eq(2).click();
     });
     cy.wait(100);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=MuiLinearProgress]').invoke('attr', 'aria-valuenow').should('eq', '50');
     });
   });
 
   it('loads next step and submits org with invalid first step data', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('button').eq(3).click();
     });
     cy.wait(100);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('button').eq(3).click();
     });
     cy.wait(500);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=MuiLinearProgress]').invoke('attr', 'aria-valuenow').should('eq', '50');
       cy.get('[class*=MuiFormHelperText]').eq(0).contains('Enter a valid email address');
       cy.get('[class*=MuiFormHelperText]').eq(1).contains('We already have an organization');
@@ -112,7 +110,7 @@ describe('Add Organization Workflow', () => {
   });
 
   it('corrects data in the first step and loads next step', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).clear().type(VALID_EMAIL);
       cy.get('input').eq(1).clear().type(VALID_NAME);
       cy.get('input').eq(3).clear().type(VALID_WEBSITE_URL);
@@ -125,13 +123,13 @@ describe('Add Organization Workflow', () => {
       cy.get('button').eq(3).click();
     });
     cy.wait(100);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=MuiLinearProgress]').invoke('attr', 'aria-valuenow').should('eq', '100');
     });
   });
 
   it('submits org with invalid data in next step', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).type(INVALID_FACEBOOK_URL);
       cy.get('input').eq(1).type(INVALID_URL);
       cy.get('input').eq(2).type(INVALID_URL);
@@ -143,7 +141,7 @@ describe('Add Organization Workflow', () => {
       cy.get('button').eq(3).click();
     });
     cy.wait(500);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=MuiFormHelperText]').eq(0).contains('Not a valid Facebook URL');
       cy.get('[class*=MuiFormHelperText]').eq(1).contains('Enter a valid URL');
       cy.get('[class*=MuiFormHelperText]').eq(2).contains('Enter a valid URL');
@@ -151,7 +149,7 @@ describe('Add Organization Workflow', () => {
   });
 
   it('corrects data in the next step and submits the org', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).clear().type(VALID_FACEBOOK_URL);
       cy.get('input').eq(1).clear().type(VALID_TWITTER_URL);
       cy.get('input').eq(2).clear().type(VALID_MEETUP_URL);
@@ -159,13 +157,13 @@ describe('Add Organization Workflow', () => {
       cy.get('button').eq(3).click();
     });
     cy.wait(500);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('[class*=makeStyles-complete]').contains('Complete');
     });
   });
 
   it('should return to tag generator', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('button').click();
     });
     cy.wait(100);
@@ -174,12 +172,10 @@ describe('Add Organization Workflow', () => {
   });
 
   it('loads first step and checks all fields are empty', () => {
-    cy.intercept(`${Cypress.env('REACT_APP_API_URL')}/api/organizations/`).as('getOrganizations');
     cy.get('#container-affiliated').within(() => {
       cy.get('#add-org-link').click();
     });
-    cy.wait('@getOrganizations');
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).should('be.empty');
       cy.get('input').eq(1).should('be.empty');
       cy.get('input').eq(2).should('be.empty');
@@ -190,7 +186,7 @@ describe('Add Organization Workflow', () => {
   });
 
   it('loads next step and checks all fields are empty', () => {
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).type(VALID_EMAIL);
       cy.get('input').eq(1).type(VALID_NAME);
       cy.get('input').eq(3).type(VALID_WEBSITE_URL);
@@ -199,7 +195,7 @@ describe('Add Organization Workflow', () => {
       cy.get('button').eq(3).click();
     });
     cy.wait(100);
-    cy.get('[class*=makeStyles-dialogContainer]').within(() => {
+    cy.get('[class*=MuiDialog-container]').within(() => {
       cy.get('input').eq(0).should('be.empty');
       cy.get('input').eq(1).should('be.empty');
       cy.get('input').eq(2).should('be.empty');

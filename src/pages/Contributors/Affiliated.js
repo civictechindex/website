@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft:'24px',
       color: theme.palette.secondary.dark,
     },
+    '& a:link': {
+      color: theme.palette.secondary.dark,
+    },
     '& a:visited': {
       color: theme.palette.secondary.dark,
     },
@@ -34,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   blueColor:{
     backgroundColor: theme.palette.secondary.dark,
     '& h4': {
+      color: theme.palette.text.secondary,
+    },
+    '& a:link': {
       color: theme.palette.text.secondary,
     },
     '& a:visited': {
