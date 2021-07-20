@@ -188,22 +188,22 @@ const TagCreator = () => {
   }
 
   const handleUpdateChipInput = (e) => {
-    // this chip input doesn't permit spaces in chip values
+    // this chip input replaces spaces with - in chip values
     setChipInputValue(e.target.value.toLowerCase().replaceAll(" ", "-"))
   }
-  const handleAddChip = (chip) => {
-    console.log(chip)
-    if (chip.endsWith("-")){
-      chip = chip.slice(0,-1)
-    }
-    setUserTags([...userTags,chip])
+
+  const handleChangeChip = (chips) =>{
+    let chipsArr = []
+    // Removes - in the end of chip
+    chipsArr = chips.map(chip =>{
+      while (chip.endsWith("-")){
+        chip = chip.slice(0,-1)
+      }
+      return chip
+    })
+    setUserTags(chipsArr)
+    setChipInputValue('')
   }
-  // const handleChangeChip = (chips) =>{
-  //   let chipsArr = []
-  //   chipsArr = chips.map(chip => (chip.endsWith("-")) ? chip.slice(0,-1) : null)
-  //   setUserTags(chipsArr)
-  //   setChipInputValue('')
-  // }
 
   const linkStyles = {
     fontWeight: '400',
@@ -263,11 +263,10 @@ const TagCreator = () => {
             setDisplayState={setDisplayState}
             setChangeValue={setChangeValue}
             resetForm={resetForm}
-            // handleChangeChip={handleChangeChip}
+            handleChangeChip={handleChangeChip}
             chipInputValue={chipInputValue}
             setChipInputValue={setChipInputValue}
-            handleUpdateChipInput={handleUpdateChipInput}
-            handleAddChip={handleAddChip}/>
+            handleUpdateChipInput={handleUpdateChipInput}/>
         </>
       )
     case "GenerateTags":
@@ -287,9 +286,8 @@ const TagCreator = () => {
         <AddMoreTags userTags={userTags} setDisplayState={setDisplayState}
           resetForm={resetForm} changeValue={changeValue}
           chipInputValue={chipInputValue}
-          setChipInputValue={setChipInputValue}
-          handleUpdateChipInput={handleUpdateChipInput} 
-          handleAddChip={handleAddChip}/>
+          handleChangeChip={handleChangeChip}
+          handleUpdateChipInput={handleUpdateChipInput}/>
       )
     case "CopyPasteTags":
       return (
