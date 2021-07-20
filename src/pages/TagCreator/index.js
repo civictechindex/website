@@ -169,7 +169,7 @@ const TagCreator = () => {
         headers: { Accept: "application/vnd.github.mercy-preview+json" },
       })
         .then(res => {
-          setTopicSearchError()
+          setTopicSearchError('')
           setCurrentTags(res.data.names)
           handleChangeProjectRepository()
         }).catch(e => {
