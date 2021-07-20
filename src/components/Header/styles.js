@@ -3,6 +3,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyles = makeStyles((theme) => ({
   // Large Screens
   nav: {
+    color: theme.palette.primary.main,
     position: 'relative',
     height: '128px',
     backgroundColor: theme.palette.background.default,
