@@ -73,7 +73,7 @@ const TagCreator = () => {
   const [userTags, setUserTags] = useQueryParam('userTags',withDefault(ArrayParam,[]));
   const [orgTags, setOrgTags] = useQueryParam('orgTags',withDefault(ArrayParam,[]));
   const [options, setOptions] = useState([]);
-  const breadCrumbLinks = [{ href: '/home', name: 'Home' }, { href: '/join-index', name: 'Join the Index' }]
+  const breadCrumbLinks = [{ href: '/home', name: 'Home' }, { href: '/join-index', name: 'Tag Your Project' }]
 
   const resetForm = () => {
     setValue('')

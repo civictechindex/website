@@ -348,7 +348,6 @@ export default function ShareTheCti() {
   const classes = useStyles();
   const breadCrumbLinks = [
     { name: 'Home', href: '/home' },
-    { name: 'Collaborate with Us', href: '/support' },
     { name: 'Share the CTI', href: '/support/share' },
   ];
 

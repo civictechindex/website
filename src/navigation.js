@@ -51,7 +51,7 @@ const navigation = [
     ],
   },
   {
-    id: 'suportTheInx',
+    id: 'supportTheInx',
     header: 'Support the Index',
     route: '#',
     subNavigation: [

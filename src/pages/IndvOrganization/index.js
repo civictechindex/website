@@ -92,12 +92,13 @@ const IndvOrgPage = (props) => {
           const parentOrgs = [];
           const crumbs = [
             { name: 'Home', href: '/home' },
-            { name: 'Organization', href: '/contributors/all' },
+            { name: 'Civic Tech Partners', href: '/organizations/all' },
+            { name: name, href: '/organizations/'+name?.replaceAll(" ", "").toLowerCase() },
           ];
           const crumbsInSmallScreen = [
             { name: 'Home', href: '/home' },
-            { name: '...', href: '/contributors/all' },
-            { name: name, href: '/contributors/'+name?.replaceAll(" ", "").toLowerCase() },
+            { name: '...', href: '/organizations/all' },
+            { name: name, href: '/organizations/'+name?.replaceAll(" ", "").toLowerCase() },
           ];
 
           // Get the Parent organization list for breadcrumbs and Affiliations Topic Tags.
@@ -110,15 +111,7 @@ const IndvOrgPage = (props) => {
               for (let j=po.length-1; j>=0; --j){
                 parentOrgs.push(po[j].name);
               }
-              for (let i = parentOrgs.length - 1; i >= 0; --i) {
-                const parentOrg = parentOrgs[i];
-                let parentOrgPathName = parentOrg;
-                parentOrgPathName = parentOrg.replaceAll(" ", "").toLowerCase();
-
-                const newCrumb = { name: `${parentOrg}`, href: `/organizations/${parentOrgPathName}` };
-                crumbs.push(newCrumb);
-              }
-
+             
               setCrumbs(crumbs);
               setParentOrgs(parentOrgs)
               setCrumbsInSmallScreen(crumbsInSmallScreen);
