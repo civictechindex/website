@@ -116,6 +116,11 @@ const BottomSection = () =>{
 
 const HowToUse = () => {
   const classes = useStyles()
+  const breadCrumbLinks = [
+    { name: 'Home', href: '/home' },
+    { name: 'Join the Index', href: '/join-index' },
+    { name: 'How to Add Your Project', href: '/join-index/how-to-add' },
+  ];
   const StepComp =({ stepText,src,alt }) =>{
     return (
       <Grid container >
@@ -138,6 +143,11 @@ const HowToUse = () => {
   return (
     <>
       <Box className='containerGray'>
+      <Box className='containerDefault'>
+          <Container>
+            <GenericHeaderSection mainTitle ="How to Add Your Project" breadCrumbLinks ={breadCrumbLinks} />
+          </Container>
+        </Box>
         <Container className={classes.containerPadding}>
           <Grid container >
             <Grid item xs={12} style={{ padding:'24px 0px' }}>
