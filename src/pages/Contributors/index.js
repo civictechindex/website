@@ -52,7 +52,6 @@ export default function Contributors({ match }) {
 
   const searchaffiliation = match.params.searchaffiliation;
 
-
   const classes = useStyle();
 
   const [organizations, setOrganizations] = useState([]);
@@ -227,8 +226,8 @@ export default function Contributors({ match }) {
         <Container className={classes.firstSectionWrapper}>
           <NavBreadcrumbs
             crumbs={[
-              { name: "Home", href: "/" },
-              { name: "Organizations", href: "/contributors" },
+              { name: "Home", href: "/home" },
+              { name: "Civic Tech Partners", href: "/organizations/all" },
             ]}
           />
           <Grid container>
@@ -270,6 +269,7 @@ export default function Contributors({ match }) {
                   control={
                     <Checkbox className={classes.chkBoxStyle}
                       onChange={checkBoxChange} defaultChecked={false}
+                      style={{ backgroundColor: 'transparent' }}
                     />
                   }
                   label={<Typography className={classes.formControlLabel}>Index Contributor</Typography>} />

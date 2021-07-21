@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Container from '@material-ui/core/Container';
+import Dialog from '@material-ui/core/Dialog';
 
-import useStyles from './styles';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import Complete from './Complete';
 
 // eslint-disable-next-line max-lines-per-function
-const AddOrgForm = React.forwardRef(({ onClose }, ref) => {
-  const classes = useStyles();
+const AddOrgForm = React.forwardRef(({ open, onClose }, ref) => {
   const [step, setStep] = useState(0);
   const [apiErrors, setApiErrors] = useState({});
   const [city, setCity] = useState('');
@@ -153,9 +151,9 @@ const AddOrgForm = React.forwardRef(({ onClose }, ref) => {
   };
 
   return (
-    <Container className={classes.dialogContainer} ref={ref}>
+    <Dialog fullWidth maxWidth='sm' open={open} ref={ref}>
       {renderStep()}
-    </Container>
+    </Dialog>
   );
 });
 

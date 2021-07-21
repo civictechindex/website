@@ -2,14 +2,12 @@
 import React,{ useState } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Link from '@material-ui/core/Link';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles'
 import AddOrgForm from './AddOrgForm';
 
@@ -43,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const OrganizationSelectorSection = ({ orgName, setOrgName, options, setOptions }) => {
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
   const loading = open && options.length === 0;
 
-  const handleModalClose = (newOrg) => {
-    setModalOpen(false);
+  const handleDialogClose = (newOrg) => {
+    setDialogOpen(false);
     if (newOrg) {
       options.shift();
       setOptions(["", newOrg, ...options]);
@@ -98,15 +96,11 @@ export const OrganizationSelectorSection = ({ orgName, setOrgName, options, setO
       <Grid item>
         <Typography variant='body1'>
           Don’t see your organization? Click&nbsp;
-          <Link id='add-org-link' className={classes.link} onClick={() => setModalOpen(true)}><b>here</b></Link>
+          <Link id='add-org-link' className={classes.link} onClick={() => setDialogOpen(true)}><b>here</b></Link>
           &nbsp;to add it.
         </Typography>
       </Grid>
-      <Modal open={modalOpen} className={classes.modalStyle}>
-        <DialogContent>
-          <AddOrgForm onClose={handleModalClose} />
-        </DialogContent>
-      </Modal>
+      <AddOrgForm open={dialogOpen} onClose={handleDialogClose} />
     </>
   )
 }

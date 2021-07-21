@@ -3,32 +3,26 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyles = makeStyles((theme) => ({
   buttons: {
     display: 'flex',
-    justifyContent: 'space-evenly',
-    padding: theme.spacing(4),
     '&>*': {
       margin: theme.spacing(1),
-      padding: theme.spacing(1),
-      width: '15rem',
     },
   },
   complete: {
-    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     textAlign: 'right',
   },
-  dialogContainer: {
-    backgroundColor: theme.palette.background.default,
-    marginTop: theme.spacing(6),
-    maxWidth: '40rem',
-  },
   field: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
+  },
+  firstHeading: {
+    color: theme.palette.secondary.dark,
   },
   heading: {
     color: theme.palette.secondary.dark,
-    paddingTop: theme.spacing(5),
+    marginTop: theme.spacing(3),
   },
   icon: {
-    color: 'green',
+    color: theme.palette.text.disabled,
     fontSize: '5rem',
     marginTop: theme.spacing(10),
   },
@@ -37,12 +31,14 @@ const useStyles = makeStyles((theme) => ({
   },
   infoLarge: {
     color: theme.palette.secondary.dark,
-    fontSize: '3rem',
+    fontSize: '2.5rem',
   },
   progress: {
     display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing(3),
+    '& p': {
+      fontSize: '1.25rem',
+    },
     '& :last-child': {
       color: theme.palette.secondary.dark,
     },
@@ -60,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
         background: 'none',
       },
     },
+  },
+  title: {
+    color: theme.palette.secondary.dark,
+    fontSize: '3rem',
+    textAlign: 'center',
   },
 }));
 

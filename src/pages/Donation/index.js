@@ -13,7 +13,6 @@ const Donation = () => {
   const classes = useStyles();
   const breadCrumbLinks = [
     { href: '/home', name: 'Home' },
-    { href: '/support', name: 'Collaborate with Us' },
     { href: '/support/donate', name: 'Donate' },
   ];
 
