@@ -189,7 +189,11 @@ const TagCreator = () => {
 
   const handleUpdateChipInput = (e) => {
     // this chip input replaces spaces with - in chip values
-    setChipInputValue(e.target.value.toLowerCase().replaceAll(" ", "-"))
+    let inputValue = e.target.value;
+    if (inputValue.slice(-1) !== ' ') {
+      inputValue = inputValue.replace(/\s+/g, '-');
+    }
+    setChipInputValue(inputValue);
   }
 
   const handleChangeChip = (chips) =>{
