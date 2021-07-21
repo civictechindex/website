@@ -73,6 +73,7 @@ const TagCreator = () => {
   const [userTags, setUserTags] = useQueryParam('userTags',withDefault(ArrayParam,[]));
   const [orgTags, setOrgTags] = useQueryParam('orgTags',withDefault(ArrayParam,[]));
   const [options, setOptions] = useState([]);
+  const [chipInputValue, setChipInputValue] = useState('');
   const breadCrumbLinks = [{ href: '/home', name: 'Home' }, { href: '/join-index', name: 'Tag Your Project' }]
 
   const resetForm = () => {
@@ -190,10 +191,27 @@ const TagCreator = () => {
       handleChangeProjectRepository()
     }
   }
+
+  const handleUpdateChipInput = (e) => {
+    // this chip input replaces spaces with - in chip values
+    let inputValue = e.target.value;
+    if (inputValue.slice(-1) !== ' ') {
+      inputValue = inputValue.replace(/\s+/g, '-');
+    }
+    setChipInputValue(inputValue);
+  }
+
   const handleChangeChip = (chips) =>{
     let chipsArr = []
-    chipsArr = chips.map(chip => chip.toLowerCase().trim().replaceAll(" ", "-"))
+    // Removes - in the end of chip
+    chipsArr = chips.map(chip =>{
+      while (chip.endsWith("-")){
+        chip = chip.slice(0,-1)
+      }
+      return chip
+    })
     setUserTags(chipsArr)
+    setChipInputValue('')
   }
 
   const linkStyles = {
@@ -254,7 +272,10 @@ const TagCreator = () => {
             setDisplayState={setDisplayState}
             setChangeValue={setChangeValue}
             resetForm={resetForm}
-            handleChangeChip={handleChangeChip}/>
+            handleChangeChip={handleChangeChip}
+            chipInputValue={chipInputValue}
+            setChipInputValue={setChipInputValue}
+            handleUpdateChipInput={handleUpdateChipInput}/>
         </>
       )
     case "GenerateTags":
@@ -272,7 +293,10 @@ const TagCreator = () => {
     case "AddMoreTags":
       return (
         <AddMoreTags userTags={userTags} setDisplayState={setDisplayState}
-          resetForm={resetForm} handleChangeChip={handleChangeChip} changeValue={changeValue} />
+          resetForm={resetForm} changeValue={changeValue}
+          chipInputValue={chipInputValue}
+          handleChangeChip={handleChangeChip}
+          handleUpdateChipInput={handleUpdateChipInput}/>
       )
     case "CopyPasteTags":
       return (
